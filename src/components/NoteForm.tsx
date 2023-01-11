@@ -74,6 +74,7 @@ const NoteForm: FC<Props> = ({ onSubmit, onAddTag, availableTags }) => {
 					<Form.Label>Body</Form.Label>
 					<Form.Control
 						required
+						placeholder="Body should be in markdown format"
 						as="textarea"
 						rows={15}
 						ref={markdownRef}

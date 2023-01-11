@@ -20,3 +20,5 @@ export type RawNoteData = {
 export type RawNote = {
 	id: string;
 } & RawNoteData;
+
+export type SimplifiedNote = Omit<Note, "markdown">;

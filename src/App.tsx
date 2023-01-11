@@ -1,9 +1,10 @@
 import { Container } from "react-bootstrap";
 import { Navigate, Route, Routes } from "react-router-dom";
-import CreateNote from "@/pages/notes/new";
 import { NoteData, RawNote, Tag } from "types";
 import useLocalStorage from "./hooks/useLocalStorage";
 import { useMemo } from "react";
+import CreateNote from "./pages/notes/new";
+import HomePage from "./pages/notes";
 
 const App = () => {
 	const [notes, setNotes] = useLocalStorage<RawNote[]>("NOTES", []);
@@ -34,7 +35,15 @@ const App = () => {
 		<Container className="my-4">
 			<Routes>
 				<Route path="notes">
-					<Route index element={<h1>Home</h1>} />
+					<Route
+						index
+						element={
+							<HomePage
+								notes={notesWithTags}
+								availableTags={tags}
+							/>
+						}
+					/>
 					<Route
 						path="new"
 						element={

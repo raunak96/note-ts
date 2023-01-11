@@ -12,7 +12,7 @@ const useLocalStorage = <T>(key: string, initialValue: T | (() => T)) => {
 		localStorage.setItem(key, JSON.stringify(value));
 	}, [key, value]);
 
-	return [value, setValue] as [T, typeof setValue];
+	return [value, setValue] as const; // as const makes sure that this array is seen like tuple with given fixed types for 1st and 2nd element
 };
 
 export default useLocalStorage;

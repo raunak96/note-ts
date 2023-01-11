@@ -1,4 +1,4 @@
-import NoteForm from "@/components/NoteForm";
+import { NoteForm } from "@/components";
 import { type FC } from "react";
 import { NoteData, Tag } from "types";
 
