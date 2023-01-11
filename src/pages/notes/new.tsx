@@ -1,15 +1,21 @@
 import NoteForm from "@/components/NoteForm";
 import { type FC } from "react";
-import { NoteData } from "types";
+import { NoteData, Tag } from "types";
 
 type Props = {
 	onSubmit: (data: NoteData) => void;
+	onAddTag: (data: Tag) => void;
+	availableTags: Tag[];
 };
-const CreateNote: FC<Props> = ({ onSubmit }) => {
+const CreateNote: FC<Props> = ({ onSubmit, onAddTag, availableTags }) => {
 	return (
 		<>
 			<h1 className="mb-4">New Note</h1>
-			<NoteForm onSubmit={onSubmit} />
+			<NoteForm
+				onSubmit={onSubmit}
+				onAddTag={onAddTag}
+				availableTags={availableTags}
+			/>
 		</>
 	);
 };

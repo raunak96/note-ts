@@ -27,6 +27,9 @@ const App = () => {
 			},
 		]);
 	};
+	const createTag = (data: Tag) => {
+		setTags(prev => [...prev, data]);
+	};
 	return (
 		<Container className="my-4">
 			<Routes>
@@ -34,7 +37,13 @@ const App = () => {
 					<Route index element={<h1>Home</h1>} />
 					<Route
 						path="new"
-						element={<CreateNote onSubmit={createNote} />}
+						element={
+							<CreateNote
+								onSubmit={createNote}
+								onAddTag={createTag}
+								availableTags={tags}
+							/>
+						}
 					/>
 					<Route path=":id">
 						<Route index element={<h1>Show</h1>} />

@@ -1,26 +1,31 @@
 import { type FormEvent, useRef, type FC, useState } from "react";
 import { Button, Col, Form, Row, Stack } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReactSelectCreatable from "react-select/creatable";
 import { NoteData, Tag } from "types";
 
 type Props = {
 	onSubmit: (data: NoteData) => void;
+	onAddTag: (data: Tag) => void;
+	availableTags: Tag[];
 };
 
-const NoteForm: FC<Props> = ({ onSubmit }) => {
+const NoteForm: FC<Props> = ({ onSubmit, onAddTag, availableTags }) => {
 	const titleRef = useRef<HTMLInputElement>(null);
 	const markdownRef = useRef<HTMLTextAreaElement>(null);
 	const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+
+	const navigate = useNavigate();
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		onSubmit({
 			title: titleRef.current!.value,
 			markdown: markdownRef.current!.value,
-			tags: [],
+			tags: selectedTags,
 		});
 		(e.target as HTMLFormElement).reset();
+		navigate("..");
 	};
 	return (
 		<Form onSubmit={handleSubmit}>
@@ -41,6 +46,10 @@ const NoteForm: FC<Props> = ({ onSubmit }) => {
 									label: tag.label,
 									value: tag.id,
 								}))}
+								options={availableTags.map(tag => ({
+									value: tag.id,
+									label: tag.label,
+								}))}
 								onChange={tags => {
 									setSelectedTags(
 										tags.map(tag => ({
@@ -48,6 +57,14 @@ const NoteForm: FC<Props> = ({ onSubmit }) => {
 											id: tag.value,
 										}))
 									);
+								}}
+								onCreateOption={label => {
+									const newTag: Tag = {
+										id: crypto.randomUUID(),
+										label,
+									};
+									onAddTag(newTag);
+									setSelectedTags(prev => [...prev, newTag]);
 								}}
 							/>
 						</Form.Group>
