@@ -1,13 +1,13 @@
 import { NoteForm } from "@/components";
-import { type FC } from "react";
-import { NoteData, Tag } from "types";
+import { useNotesContext } from "@/context/NotesContext";
 
-const CreateNote = () => {
+const CreateNotePage = () => {
+	const { createNote } = useNotesContext();
 	return (
 		<>
 			<h1 className="mb-4">New Note</h1>
-			<NoteForm />
+			<NoteForm onSubmit={createNote} />
 		</>
 	);
 };
-export default CreateNote;
+export default CreateNotePage;

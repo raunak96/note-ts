@@ -29,13 +29,32 @@ const NotesProvider: FC<Props> = ({ children }) => {
 			},
 		]);
 	};
+	const updateNote = (id: string, { tags, ...data }: NoteData) => {
+		setNotes(prevNotes =>
+			prevNotes.map(note => {
+				if (note.id === id)
+					return {
+						...note,
+						...data,
+						tagIds: tags.map(tag => tag.id),
+					};
+				return note;
+			})
+		);
+	};
 	const createTag = (data: Tag) => {
 		setTags(prev => [...prev, data]);
 	};
 
 	return (
 		<NotesContext.Provider
-			value={{ notes: notesWithTags, createNote, createTag, tags }}>
+			value={{
+				notes: notesWithTags,
+				createNote,
+				updateNote,
+				createTag,
+				tags,
+			}}>
 			{children}
 		</NotesContext.Provider>
 	);

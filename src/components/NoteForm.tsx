@@ -1,21 +1,31 @@
 import { useNotesContext } from "@/context/NotesContext";
-import { type FormEvent, useRef, useState } from "react";
+import { type FormEvent, useRef, useState, type FC } from "react";
 import { Button, Col, Form, Row, Stack } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import ReactSelectCreatable from "react-select/creatable";
-import { Tag } from "types";
+import { NoteData, Tag } from "types";
 
-const NoteForm = () => {
-	const { createNote, createTag, tags: availableTags } = useNotesContext();
+/* Partial means all those property are optional */
+type Props = {
+	onSubmit: (data: NoteData) => void;
+} & Partial<NoteData>;
+
+const NoteForm: FC<Props> = ({
+	onSubmit,
+	markdown = "",
+	tags = [],
+	title = "",
+}) => {
+	const { createTag, tags: availableTags } = useNotesContext();
 	const titleRef = useRef<HTMLInputElement>(null);
 	const markdownRef = useRef<HTMLTextAreaElement>(null);
-	const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+	const [selectedTags, setSelectedTags] = useState<Tag[]>(tags);
 
 	const navigate = useNavigate();
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		createNote({
+		onSubmit({
 			title: titleRef.current!.value,
 			markdown: markdownRef.current!.value,
 			tags: selectedTags,
@@ -30,7 +40,11 @@ const NoteForm = () => {
 					<Col>
 						<Form.Group controlId="title">
 							<Form.Label>Title</Form.Label>
-							<Form.Control required ref={titleRef} />
+							<Form.Control
+								required
+								ref={titleRef}
+								defaultValue={title}
+							/>
 						</Form.Group>
 					</Col>
 					<Col>
@@ -74,6 +88,7 @@ const NoteForm = () => {
 						as="textarea"
 						rows={15}
 						ref={markdownRef}
+						defaultValue={markdown}
 					/>
 				</Form.Group>
 				<Stack
