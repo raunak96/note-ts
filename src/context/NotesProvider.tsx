@@ -42,6 +42,8 @@ const NotesProvider: FC<Props> = ({ children }) => {
 			})
 		);
 	};
+	const deleteNote = (id: string) =>
+		setNotes(prevNotes => prevNotes.filter(note => note.id !== id));
 	const createTag = (data: Tag) => {
 		setTags(prev => [...prev, data]);
 	};
@@ -52,6 +54,7 @@ const NotesProvider: FC<Props> = ({ children }) => {
 				notes: notesWithTags,
 				createNote,
 				updateNote,
+				deleteNote,
 				createTag,
 				tags,
 			}}>

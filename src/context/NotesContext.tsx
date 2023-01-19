@@ -6,6 +6,7 @@ type NoteContext = {
 	tags: Tag[];
 	createNote: (data: NoteData) => void;
 	updateNote: (id: string, data: NoteData) => void;
+	deleteNote: (id: string) => void;
 	createTag: (data: Tag) => void;
 };
 export const NotesContext = createContext<NoteContext>({
@@ -13,6 +14,7 @@ export const NotesContext = createContext<NoteContext>({
 	tags: [],
 	createNote: (data: NoteData) => {},
 	updateNote: (id: string, data: NoteData) => {},
+	deleteNote: (id: string) => {},
 	createTag: (data: Tag) => {},
 });
 

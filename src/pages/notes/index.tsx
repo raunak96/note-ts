@@ -25,17 +25,14 @@ const HomePage = () => {
 
 	return (
 		<>
-			<Row className="my-6 align-items-center">
+			<Row className="my-4 align-items-center">
 				<Col>
 					<h1>Home Page</h1>
 				</Col>
 				<Col xs="auto">
-					<Stack gap={2} direction="horizontal">
-						<Link to="/notes/new">
-							<Button variant="primary">Create</Button>
-						</Link>
-						<Button variant="outline-secondary">Edit Tags</Button>
-					</Stack>
+					<Link to="/notes/new">
+						<Button variant="primary">Create Note</Button>
+					</Link>
 				</Col>
 			</Row>
 			<Form>

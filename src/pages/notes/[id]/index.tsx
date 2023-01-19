@@ -1,4 +1,5 @@
 import { useNote } from "@/components/NoteLayout";
+import { useNotesContext } from "@/context/NotesContext";
 import { Badge, Button, Col, Row, Stack } from "react-bootstrap";
 import ReactMarkdown from "react-markdown";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 const NotePage = () => {
 	const note = useNote();
 	const navigate = useNavigate();
+	const { deleteNote } = useNotesContext();
 	return (
 		<>
 			<Row className="align-items-center mb-4">
@@ -31,6 +33,7 @@ const NotePage = () => {
 						</Link>
 						<Button
 							onClick={() => {
+								deleteNote(note.id);
 								navigate("/");
 							}}
 							variant="outline-danger">
