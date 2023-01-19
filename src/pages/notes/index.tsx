@@ -1,19 +1,17 @@
 import { NoteCard } from "@/components";
-import { type FC, useState, useMemo } from "react";
+import { useNotesContext } from "@/context/NotesContext";
+import { useState, useMemo } from "react";
 import { Button, Col, Form, Row, Stack } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ReactSelect from "react-select";
 import { SimplifiedNote, Tag } from "types";
 
-type Props = {
-	availableTags: Tag[];
-	notes: SimplifiedNote[];
-};
-const HomePage: FC<Props> = ({ availableTags, notes }) => {
+const HomePage = () => {
+	const { notes, tags: availableTags } = useNotesContext();
 	const [title, setTitle] = useState<string>("");
 	const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
 
-	const filteredNotes = useMemo(() => {
+	const filteredNotes: SimplifiedNote[] = useMemo(() => {
 		return notes.filter(
 			note =>
 				(title === "" ||
@@ -27,7 +25,7 @@ const HomePage: FC<Props> = ({ availableTags, notes }) => {
 
 	return (
 		<>
-			<Row className="my-4 align-items-center">
+			<Row className="my-6 align-items-center">
 				<Col>
 					<h1>Home Page</h1>
 				</Col>
@@ -78,7 +76,7 @@ const HomePage: FC<Props> = ({ availableTags, notes }) => {
 					</Col>
 				</Row>
 			</Form>
-			<Row xs={1} sm={2} lg={3} xl={4} className="g-3">
+			<Row xs={1} sm={2} lg={3} xl={4} className="g-4 mt-4">
 				{filteredNotes.map(note => (
 					<Col key={note.id}>
 						<NoteCard note={note} />

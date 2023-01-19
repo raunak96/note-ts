@@ -3,9 +3,11 @@ import { Badge, Card, Stack } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { SimplifiedNote } from "types";
 import styles from "@/styles/NoteCard.module.css";
+
 type Props = {
 	note: SimplifiedNote;
 };
+
 const NoteCard: FC<Props> = ({ note: { id, title, tags } }) => {
 	return (
 		<Card

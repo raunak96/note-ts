@@ -1,16 +1,12 @@
-import { type FormEvent, useRef, type FC, useState } from "react";
+import { useNotesContext } from "@/context/NotesContext";
+import { type FormEvent, useRef, useState } from "react";
 import { Button, Col, Form, Row, Stack } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import ReactSelectCreatable from "react-select/creatable";
-import { NoteData, Tag } from "types";
+import { Tag } from "types";
 
-type Props = {
-	onSubmit: (data: NoteData) => void;
-	onAddTag: (data: Tag) => void;
-	availableTags: Tag[];
-};
-
-const NoteForm: FC<Props> = ({ onSubmit, onAddTag, availableTags }) => {
+const NoteForm = () => {
+	const { createNote, createTag, tags: availableTags } = useNotesContext();
 	const titleRef = useRef<HTMLInputElement>(null);
 	const markdownRef = useRef<HTMLTextAreaElement>(null);
 	const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
@@ -19,7 +15,7 @@ const NoteForm: FC<Props> = ({ onSubmit, onAddTag, availableTags }) => {
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		onSubmit({
+		createNote({
 			title: titleRef.current!.value,
 			markdown: markdownRef.current!.value,
 			tags: selectedTags,
@@ -63,7 +59,7 @@ const NoteForm: FC<Props> = ({ onSubmit, onAddTag, availableTags }) => {
 										id: crypto.randomUUID(),
 										label,
 									};
-									onAddTag(newTag);
+									createTag(newTag);
 									setSelectedTags(prev => [...prev, newTag]);
 								}}
 							/>
